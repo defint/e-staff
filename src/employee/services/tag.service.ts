@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { TAG_REPOSITORY } from 'src/constants';
 import { Tag } from '../entities/tag.entity';
@@ -15,11 +15,26 @@ export class TagService {
     return this.tagRepository.find();
   }
 
-  async createTag(item: TagDto): Promise<Tag> {
-    const findTag = await this.tagRepository
-      .createQueryBuilder()
-      .where({ label: item.label })
-      .getOne();
+  async getOne(id: number): Promise<Tag> {
+    const tag = await this.tagRepository.findOne(id);
+
+    if (!tag) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'Tag does not exist.',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    return tag;
+  }
+
+  async findOrCreateTag(item: TagDto): Promise<Tag> {
+    const findTag = await this.tagRepository.findOne({
+      where: { label: item.label },
+    });
     if (findTag) {
       return findTag;
     }

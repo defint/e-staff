@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { EmployeeService } from '../services/employee.service';
 import { EmployeeDto } from '../dto/employee.dto';
+import { TagDto } from '../dto/tag.dto';
 
 @Controller('employee')
 export class EmployeeController {
@@ -34,7 +35,20 @@ export class EmployeeController {
   }
 
   @Delete(':id')
-  remove(@Param('id', new ParseIntPipe()) id: string) {
+  remove(@Param('id', new ParseIntPipe()) id: number) {
     return this.employeeService.deleteEmployee(id);
+  }
+
+  @Post(':id/tag')
+  createTag(@Param('id', new ParseIntPipe()) id: number, @Body() tag: TagDto) {
+    return this.employeeService.createTag(id, tag);
+  }
+
+  @Delete(':id/tag/:tagId')
+  removeTag(
+    @Param('id', new ParseIntPipe()) id: number,
+    @Param('tagId', new ParseIntPipe()) tagId: number,
+  ) {
+    return this.employeeService.removeTag(id, tagId);
   }
 }
