@@ -1,5 +1,11 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import { IsMobilePhone, IsNotEmpty, IsNumberString, IsString, MaxLength } from 'class-validator';
+import {
+  IsMobilePhone,
+  IsNotEmpty,
+  IsNumberString,
+  IsString,
+  MaxLength,
+} from 'class-validator';
 
 @Entity()
 export class Employee {
@@ -20,7 +26,7 @@ export class Employee {
   @IsNotEmpty()
   @IsString()
   @MaxLength(20)
-  @IsMobilePhone("any")
+  @IsMobilePhone('any')
   @Column({ length: 20 })
   phone: string;
 }
