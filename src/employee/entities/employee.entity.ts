@@ -14,7 +14,7 @@ export class Employee {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 200 })
+  @Column({ length: 200, nullable: false })
   name: string;
 
   @Column('int')
