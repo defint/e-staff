@@ -15,6 +15,6 @@ export class Employee {
   @Column({ length: 20 })
   phone: string;
 
-  @ManyToOne(type => Office, office => office.employees, {nullable: false})
+  @ManyToOne(type => Office, office => office.employees, { nullable: false })
   office: Office;
 }

@@ -2,9 +2,7 @@ import * as yaml from 'js-yaml';
 import * as fs from 'fs';
 import { getConnection } from './database/database.providers';
 
-export async function loadFixtures(
-  name: string,
-): Promise<any> {
+export async function loadFixtures(name: string): Promise<any> {
   const dbConnection = await getConnection();
 
   let items: any[] = [];
@@ -35,4 +33,4 @@ export async function loadFixtures(
   });
 }
 
-loadFixtures("offices");
+loadFixtures('offices');

@@ -14,7 +14,7 @@ export class EmployeeService {
   ) {}
 
   async getList(): Promise<Array<Employee>> {
-    return this.employeeRepository.find({ relations: ["office"] });
+    return this.employeeRepository.find({ relations: ['office'] });
   }
 
   async createEmployee(item: EmployeeDto): Promise<Employee> {
@@ -42,7 +42,7 @@ export class EmployeeService {
     employee.office = office;
 
     await this.employeeRepository.update(id, employee);
-    return this.employeeRepository.findOne(id, { relations: ["office"] });
+    return this.employeeRepository.findOne(id, { relations: ['office'] });
   }
 
   async deleteEmployee(id: string): Promise<number> {

@@ -26,7 +26,10 @@ export class EmployeeController {
   }
 
   @Put(':id')
-  update(@Param('id', new ParseIntPipe()) id: number, @Body() item: EmployeeDto) {
+  update(
+    @Param('id', new ParseIntPipe()) id: number,
+    @Body() item: EmployeeDto,
+  ) {
     return this.employeeService.editEmployee(id, item);
   }
 

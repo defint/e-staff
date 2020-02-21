@@ -17,11 +17,14 @@ export class OfficeService {
   async getOne(id: number): Promise<Office> {
     const office = await this.officeRepository.findOne(id);
 
-    if(!office) {
-      throw new HttpException({
-        status: HttpStatus.BAD_REQUEST,
-        error: 'Office does not exist.',
-      }, HttpStatus.BAD_REQUEST);
+    if (!office) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'Office does not exist.',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     return office;
