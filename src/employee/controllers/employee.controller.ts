@@ -9,7 +9,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { EmployeeService } from '../services/employee.service';
-import { Employee } from '../entities/employee.entity';
+import { EmployeeDto } from '../dto/employee.dto';
 
 @Controller('employee')
 export class EmployeeController {
@@ -21,14 +21,13 @@ export class EmployeeController {
   }
 
   @Post()
-  create(@Body() item: Employee) {
+  create(@Body() item: EmployeeDto) {
     return this.employeeService.createEmployee(item);
   }
 
   @Put(':id')
-  update(@Param('id', new ParseIntPipe()) id, @Body() item: Employee) {
-    item.id = id;
-    return this.employeeService.editEmployee(item);
+  update(@Param('id', new ParseIntPipe()) id: number, @Body() item: EmployeeDto) {
+    return this.employeeService.editEmployee(id, item);
   }
 
   @Delete(':id')

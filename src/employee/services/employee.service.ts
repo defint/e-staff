@@ -2,27 +2,47 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Employee } from '../entities/employee.entity';
 import { Repository } from 'typeorm';
 import { EMPLOYEE_REPOSITORY } from 'src/constants';
+import { EmployeeDto } from '../dto/employee.dto';
+import { OfficeService } from './office.service';
 
 @Injectable()
 export class EmployeeService {
   constructor(
     @Inject(EMPLOYEE_REPOSITORY)
     private readonly employeeRepository: Repository<Employee>,
+    private readonly officeService: OfficeService,
   ) {}
 
   async getList(): Promise<Array<Employee>> {
-    return this.employeeRepository.find();
+    return this.employeeRepository.find({ relations: ["office"] });
   }
 
-  async createEmployee(item: Employee): Promise<Employee> {
-    const entity = this.employeeRepository.create(item);
+  async createEmployee(item: EmployeeDto): Promise<Employee> {
+    const office = await this.officeService.getOne(item.officeId);
+
+    const employee = new Employee();
+    employee.age = item.age;
+    employee.name = item.name;
+    employee.phone = item.phone;
+    employee.office = office;
+
+    const entity = this.employeeRepository.create(employee);
     await this.employeeRepository.save(entity);
     return entity;
   }
 
-  async editEmployee(item: Employee): Promise<Employee> {
-    await this.employeeRepository.update(item.id, item);
-    return this.employeeRepository.findOne(item.id);
+  async editEmployee(id: number, item: EmployeeDto): Promise<Employee> {
+    const office = await this.officeService.getOne(item.officeId);
+
+    const employee = new Employee();
+    employee.id = id;
+    employee.age = item.age;
+    employee.name = item.name;
+    employee.phone = item.phone;
+    employee.office = office;
+
+    await this.employeeRepository.update(id, employee);
+    return this.employeeRepository.findOne(id, { relations: ["office"] });
   }
 
   async deleteEmployee(id: string): Promise<number> {
