@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Employee } from './entities/employee.entity';
+import { Employee } from '../entities/employee.entity';
 import { Repository } from 'typeorm';
 import { EMPLOYEE_REPOSITORY } from 'src/constants';
 
