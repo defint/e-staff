@@ -20,9 +20,9 @@ export class EmployeeService {
     return entity;
   }
 
-  async editEmployee(id: string, item: Employee): Promise<Employee> {
-    await this.employeeRepository.update(id, item);
-    return this.employeeRepository.findOne(id);
+  async editEmployee(item: Employee): Promise<Employee> {
+    await this.employeeRepository.update(item.id, item);
+    return this.employeeRepository.findOne(item.id);
   }
 
   async deleteEmployee(id: string): Promise<number> {

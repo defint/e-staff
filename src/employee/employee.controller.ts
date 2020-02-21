@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { EmployeeService } from './employee.service';
 import { Employee } from './entities/employee.entity';
 
@@ -17,12 +17,13 @@ export class EmployeeController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() item: Employee) {
-    return this.employeeService.editEmployee(id, item);
+  update(@Param('id', new ParseIntPipe()) id, @Body() item: Employee) {
+    item.id = id;
+    return this.employeeService.editEmployee(item);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id', new ParseIntPipe()) id: string) {
     return this.employeeService.deleteEmployee(id);
   }
 }
