@@ -1,5 +1,13 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinTable,
+  ManyToMany,
+} from 'typeorm';
 import { Office } from './office.entity';
+import { Tag } from './tag.entity';
 
 @Entity()
 export class Employee {
@@ -17,4 +25,8 @@ export class Employee {
 
   @ManyToOne(type => Office, office => office.employees, { nullable: false })
   office: Office;
+
+  @ManyToMany(type => Tag, tag => tag.employees)
+  @JoinTable()
+  tags: Tag[];
 }
