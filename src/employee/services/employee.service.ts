@@ -6,6 +6,7 @@ import { EmployeeDto } from '../dto/employee.dto';
 import { OfficeService } from './office.service';
 import { TagDto } from '../dto/tag.dto';
 import { TagService } from './tag.service';
+import { Tag } from '../entities/tag.entity';
 
 @Injectable()
 export class EmployeeService {
@@ -71,7 +72,7 @@ export class EmployeeService {
     return result.affected;
   }
 
-  async createTag(id: number, itemTag: TagDto): Promise<Employee> {
+  async createTag(id: number, itemTag: TagDto): Promise<Tag> {
     const tag = await this.tagService.findOrCreateTag(itemTag);
     const employee = await this.getOne(id);
 
@@ -82,7 +83,7 @@ export class EmployeeService {
 
     await this.employeeRepository.save(employee);
 
-    return employee;
+    return tag;
   }
 
   async removeTag(id: number, idTag: number): Promise<Employee> {

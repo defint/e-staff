@@ -1,9 +1,10 @@
 import {
-  IsMobilePhone,
   IsNotEmpty,
+  IsNumber,
   IsNumberString,
   IsString,
   MaxLength,
+  MinLength,
 } from 'class-validator';
 
 export class EmployeeDto {
@@ -13,16 +14,16 @@ export class EmployeeDto {
   name: string;
 
   @IsNotEmpty()
-  @IsNumberString()
+  @IsNumber()
   age: number;
 
   @IsNotEmpty()
-  @IsString()
   @MaxLength(20)
-  @IsMobilePhone('any')
+  @MinLength(5)
+  @IsNumberString()
   phone: string;
 
   @IsNotEmpty()
-  @IsNumberString()
+  @IsNumber()
   officeId: number;
 }

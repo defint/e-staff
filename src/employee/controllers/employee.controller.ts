@@ -21,6 +21,11 @@ export class EmployeeController {
     return this.employeeService.getList();
   }
 
+  @Get(':id')
+  async getOne(@Param('id', new ParseIntPipe()) id: number) {
+    return this.employeeService.getOne(id);
+  }
+
   @Post()
   create(@Body() item: EmployeeDto) {
     return this.employeeService.createEmployee(item);
