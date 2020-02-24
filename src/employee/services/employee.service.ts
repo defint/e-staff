@@ -7,6 +7,7 @@ import { OfficeService } from './office.service';
 import { TagDto } from '../dto/tag.dto';
 import { TagService } from './tag.service';
 import { Tag } from '../entities/tag.entity';
+import { StatDto } from '../dto/stat.dto';
 
 @Injectable()
 export class EmployeeService {
@@ -19,6 +20,14 @@ export class EmployeeService {
 
   async getList(): Promise<Array<Employee>> {
     return this.employeeRepository.find({ relations: ['office', 'tags'] });
+  }
+
+  async getStat(): Promise<StatDto> {
+    const result = new StatDto();
+    result.total = await this.employeeRepository.count();
+    result.offices = await this.officeService.getStat();
+    result.tags = await this.tagService.getStat();
+    return result;
   }
 
   async getOne(id: number): Promise<Employee> {

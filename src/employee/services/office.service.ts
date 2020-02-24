@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { OFFICE_REPOSITORY } from 'src/constants';
 import { Office } from '../entities/office.entity';
+import { StatItemDto } from '../dto/stat.dto';
 
 @Injectable()
 export class OfficeService {
@@ -12,6 +13,20 @@ export class OfficeService {
 
   async getList(): Promise<Array<Office>> {
     return this.officeRepository.find();
+  }
+
+  async getStat(): Promise<Array<StatItemDto>> {
+    const offices = await this.officeRepository.find({
+      relations: ['employees'],
+    });
+
+    return offices.map(office => {
+      const item = new StatItemDto();
+      item.title = office.title;
+      item.total = office.employees.length;
+
+      return item;
+    });
   }
 
   async getOne(id: number): Promise<Office> {

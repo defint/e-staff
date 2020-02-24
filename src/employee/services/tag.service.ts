@@ -3,6 +3,7 @@ import { Repository } from 'typeorm';
 import { TAG_REPOSITORY } from 'src/constants';
 import { Tag } from '../entities/tag.entity';
 import { TagDto } from '../dto/tag.dto';
+import { StatItemDto } from '../dto/stat.dto';
 
 @Injectable()
 export class TagService {
@@ -45,5 +46,17 @@ export class TagService {
     const entity = this.tagRepository.create(tag);
     await this.tagRepository.save(entity);
     return entity;
+  }
+
+  async getStat(): Promise<Array<StatItemDto>> {
+    const tags = await this.tagRepository.find({ relations: ['employees'] });
+
+    return tags.map(tag => {
+      const item = new StatItemDto();
+      item.title = tag.label;
+      item.total = tag.employees.length;
+
+      return item;
+    });
   }
 }
