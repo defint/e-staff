@@ -4,7 +4,7 @@ import { DATABASE_CONNECTION } from '../constants';
 export const getConnection = async () =>
   await createConnection({
     type: 'postgres',
-    host: 'localhost',
+    host: 'postgres',
     port: 5432,
     username: 'heroes_user',
     password: 'password',

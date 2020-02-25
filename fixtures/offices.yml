@@ -1,7 +1,10 @@
 fixtures:
 - Office:
+    id: 1
     title: Tallinn
 - Office:
+    id: 2
     title: Riga
 - Office:
+    id: 3
     title: Vilnius

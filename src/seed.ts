@@ -24,12 +24,16 @@ export async function loadFixtures(name: string): Promise<any> {
     console.log(item);
     const entityName = Object.keys(item)[0];
     const data = item[entityName];
-    await dbConnection
-      .createQueryBuilder()
-      .insert()
-      .into(entityName)
-      .values(data)
-      .execute();
+    try {
+      await dbConnection
+        .createQueryBuilder()
+        .insert()
+        .into(entityName)
+        .values(data)
+        .execute();
+    } catch (e) {
+      console.log(`Ignore item ${entityName}`);
+    }
   });
 }
 
