@@ -17,8 +17,8 @@ export class Employee {
   @Column({ length: 200, nullable: false })
   name: string;
 
-  @Column('int')
-  age: number;
+  @Column('date', { nullable: true })
+  dob: string;
 
   @Column({ length: 20 })
   phone: string;

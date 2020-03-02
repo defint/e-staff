@@ -52,7 +52,7 @@ export class EmployeeService {
     const office = await this.officeService.getOne(item.officeId);
 
     const employee = new Employee();
-    employee.age = item.age;
+    employee.dob = item.dob;
     employee.name = item.name;
     employee.phone = item.phone;
     employee.office = office;
@@ -67,7 +67,7 @@ export class EmployeeService {
 
     const employee = new Employee();
     employee.id = id;
-    employee.age = item.age;
+    employee.dob = item.dob;
     employee.name = item.name;
     employee.phone = item.phone;
     employee.office = office;

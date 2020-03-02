@@ -1,4 +1,5 @@
 import {
+  IsDateString,
   IsNotEmpty,
   IsNumber,
   IsNumberString,
@@ -14,8 +15,8 @@ export class EmployeeDto {
   name: string;
 
   @IsNotEmpty()
-  @IsNumber()
-  age: number;
+  @IsDateString()
+  dob: string;
 
   @IsNotEmpty()
   @MaxLength(20)
